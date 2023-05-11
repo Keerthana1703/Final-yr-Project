@@ -508,16 +508,16 @@ while True:
 
 
           txt=small_font.render(f'number of questions answered correctly: {sum(Score)}',True,(0,0,0))
-          txt_rect=txt.get_rect(center=(216,113))
+          txt_rect=txt.get_rect(center=(216,83))
           screen.blit(txt,txt_rect)
           txt=small_font.render(f'number of questions answered incorrectly: {incorrect}',True,(0,0,0))
-          txt_rect=txt.get_rect(center=(216,148))
+          txt_rect=txt.get_rect(center=(216,118))
           screen.blit(txt,txt_rect)
           txt=font.render('Press space to try again!!',True,(0,0,0))
-          txt_rect=txt.get_rect(center=(216,184))
+          txt_rect=txt.get_rect(center=(216,154))
           screen.blit(txt,txt_rect)
           txt=font.render('Press Enter to see history of players',True,(0,0,0))
-          txt_rect=txt.get_rect(center=(216,250))
+          txt_rect=txt.get_rect(center=(216,220))
           screen.blit(txt,txt_rect)
         ## Display the prompt and input box
         #  prompt_text = large_font.render("Click the button below to send video explanations to your email address:", True, BLACK)
@@ -537,16 +537,16 @@ while True:
            # display YouTube links for incorrect answers
           if incorrect > 0:
              txt = font.render("Click the links below to watch video explanations:", True, (0, 0, 0))
-             txt_rect = txt.get_rect(center=(216, 350))
+             txt_rect = txt.get_rect(center=(216, 300))
              screen.blit(txt, txt_rect)
-             y = 380
+             y = 320
              for link in youtube_links:
                txt = small_font.render(link, True, (0, 0, 0))
                txt_rect = txt.get_rect(center=(216, y))
                screen.blit(txt, txt_rect)
                #if txt_rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
                #    webbrowser.open(link)
-               y += 20
+               y += 30
           pygame.display.update()
           medium_font = pygame.font.SysFont('arial', 36)
           font=pygame.font.SysFont('arial',25) 
@@ -562,7 +562,7 @@ while True:
             #input_rect = input_text.get_rect(center=input_box_rect.center)
             #screen.blit(input_text, input_rect)
             # Display the send button
-          send_rect = pygame.Rect(150, 500, 200, 50)
+          send_rect = pygame.Rect(100, 500, 200, 50)
           pygame.draw.rect(screen,BLUE, send_rect)
           txt = small_font.render("Send links to email", True, BLACK)
           txt_rect = txt.get_rect(center=send_rect.center)
@@ -624,16 +624,16 @@ while True:
           txt_rect=txt.get_rect(center=(216,241))
           screen.blit(txt,txt_rect)
           txt=font.render('Press space to try again!!',True,(0,0,0))
-          txt_rect=txt.get_rect(center=(216,200))
+          txt_rect=txt.get_rect(center=(216,180))
           screen.blit(txt,txt_rect)
           txt=font.render('Press Enter to see history of players',True,(0,0,0))
-          txt_rect=txt.get_rect(center=(216,300))
+          txt_rect=txt.get_rect(center=(216,200))
           screen.blit(txt,txt_rect)
           pygame.display.update()
           # display YouTube links for incorrect answers
           if incorrect > 0:
              txt = small_font.render("Click the links below to watch video explanations:", True, (0, 0, 0))
-             txt_rect = txt.get_rect(center=(216, 400))
+             txt_rect = txt.get_rect(center=(216, 230))
              screen.blit(txt, txt_rect)
              y = 450
              for link in youtube_links:
