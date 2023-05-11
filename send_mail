@@ -1,0 +1,219 @@
+import pygame
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+#!
+# Initialize Pygame
+pygame.init()
+
+# Create the Pygame screen
+screen = pygame.display.set_mode((432, 768))
+
+# Define fonts
+large_font = pygame.font.Font(None, 48)
+medium_font = pygame.font.Font(None, 36)
+small_font = pygame.font.Font(None, 24)
+
+# Define colors
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+
+# Define the list of YouTube links
+youtube_links = ["https://www.youtube.com/watch?v=123", "https://www.youtube.com/watch?v=456"]
+
+# Define the function to send an email
+def send_email(to, links):
+    # create message
+    message = MIMEMultipart()
+    message['Subject'] = 'Video explanations for incorrect answers'
+    message['From'] = 'your_email@example.com'
+    message['To'] = to
+
+    # create text part
+    text = "Click the links below to watch video explanations:\n"
+    for link in links:
+        text += link + "\n"
+    part1 = MIMEText(text, 'plain')
+
+    # attach parts to message
+    message.attach(part1)
+
+    # create SMTP session
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login('your_email@example.com', 'your_email_password')
+
+    # send email
+    server.sendmail('your_email@example.com', to, message.as_string())
+    server.quit()
+#!
+# Define the main loop
+def main_loop():
+    email_address = ''
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            elif event.type == pygame.MOUSEBUTTONDOWN and send_rect.collidepoint(event.pos):
+                email_address = input_box(prompt="Enter your email address:")
+                send_email(email_address, youtube_links)
+
+        # Clear the screen
+        screen.fill(WHITE)
+
+        # Display the prompt and input box
+        prompt_text = large_font.render("Click the button below to send video explanations to your email address:", True, BLACK)
+        prompt_rect = prompt_text.get_rect(center=(216, 200))
+        screen.blit(prompt_text, prompt_rect)
+        input_box_rect = pygame.Rect(100, 300, 232, 50)
+        pygame.draw.rect(screen, BLACK, input_box_rect, 2)
+        input_text = medium_font.render(email_address, True, BLACK)
+        input_rect = input_text.get_rect(center=input_box_rect.center)
+        screen.blit(input_text, input_rect)
+
+        # Display the send button
+        send_rect = pygame.Rect(150, 500, 200, 50)
+        pygame.draw.rect(screen, WHITE, send_rect)
+        txt = small_font.render("Send links to email", True, BLACK)
+        txt_rect = txt.get_rect(center=send_rect.center)
+        screen.blit(txt, txt_rect)
+
+        # Update the display
+        pygame.display.update()
+
+# Define the function to display the input box and prompt the user for input
+def input_box(prompt=""):
+    input_str = ""
+    while True:
+     for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RETURN:
+                return input_str
+
+            elif event.key == pygame.K_BACKSPACE:
+                input_str = input_str[:-1]
+
+            else:
+                input_str += event.unicode
+
+    # clear the screen
+     screen.fill((255, 255, 255))
+
+    # draw input box
+     pygame.draw.rect(screen, (0, 0, 0), input_rect, 2)
+     pygame.draw.rect(screen, (255, 255, 255), input_rect)
+
+    # render input text
+     txt_surface = font.render(input_str, True, (0, 0, 0))
+     screen.blit(txt_surface, (input_rect.x + 5, input_rect.y + 5))
+
+    # render 'Press enter to submit' text
+     prompt_txt = small_font.render('Press enter to submit', True, (0, 0, 0))
+     prompt_rect = prompt_txt.get_rect(center=(216, 400))
+     screen.blit(prompt_txt, prompt_rect)
+
+     pygame.display.update()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#in elif phase=="end_game"
+
+# #FOR EMAIL
+#          send_rect = pygame.Rect(150, 500, 200, 50)
+#          pygame.draw.rect(screen, (255, 255, 255), send_rect)
+#          txt = small_font.render("Send links to email", True, (0, 0, 0))
+#          txt_rect = txt.get_rect(center=send_rect.center)
+#          screen.blit(txt, txt_rect)
+
+
+#email_input_rect = pygame.Rect(150, 400, 200, 30)
+#email_input_active = False
+#email_input_text = ''
+
+#while True:
+#    # other event handling code
+#    for event in pygame.event.get():
+#        if event.type == pygame.MOUSEBUTTONDOWN:
+#            # check if mouse click is on email input field
+#            if email_input_rect.collidepoint(event.pos):
+#                email_input_active = True
+#            else:
+#                email_input_active = False
+#        elif event.type == pygame.KEYDOWN:
+#            if email_input_active:
+#                if event.key == pygame.K_BACKSPACE:
+#                    email_input_text = email_input_text[:-1]
+#                else:
+#                    email_input_text += event.unicode
+    
+#    ## drawing code
+#    #pygame.draw.rect(screen, (255, 255, 255), email_input_rect)
+#    #txt = small_font.render(email_input_text, True, (0, 0, 0))
+#    #screen.blit(txt, (email_input_rect.x + 5, email_input_rect.y + 5))
+    
+#    # check if Send button is clicked
+#    if send_rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
+#        # send email using email_input_text as the destination email address
+#        # clear the email input field
+#        email_input_text = ''
+    
+#    pygame.display.update()
+
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            # Quit the game if the user closes the window
+            pygame.quit()
+            sys.exit()
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RETURN:
+                display_leaderboard()
+            elif event.key == pygame.K_SPACE:
+                questions()
+            elif event.key == pygame.K_BACKSPACE:
+                email_input_text = email_input_text[:-1]
+            else:
+                email_input_text += event.unicode
+
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            # check if a link was clicked
+            pos = pygame.mouse.get_pos()
+            y = 450
+            for link in youtube_links:
+                txt = small_font.render(link, True, (0, 0, 255))
+                txt_rect = txt.get_rect(center=(216, y))
+                if txt_rect.collidepoint(pos):
+                    webbrowser.open(link)
+                    break
+                y += 50
+
+            # check if the send button was clicked
+            if send_rect.collidepoint(pos):
+                send_email(email_input_text, youtube_links)
+
+        # draw the email input box and send button
+        pygame.draw.rect(screen, (255, 255, 255), email_input_box)
+        pygame.draw.rect(screen, (0, 0, 0), email_input_box, 2)
+        screen.blit(email_input_font.render(email_input_text, True, (0, 0, 0)), (email_input_box.x + 5, email_input_box.y + 5))
+        screen.blit(send_font.render("Send", True, (0, 0, 0)), send_rect)
+
+        pygame.display.update()
+projectfinalyr2023@gmail.com
