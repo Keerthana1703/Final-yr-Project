@@ -21,3 +21,9 @@
         screen.blit(send_font.render("Send", True, (0, 0, 0)), send_rect)
 
         pygame.display.update()
+
+
+
+        login_rects=[pygame.Rect((108,284),(288,21))
+        looks=[pygame.Rect((106,282),(291,24))
+        login_box=pygame.Surface((288,21))

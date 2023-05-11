@@ -146,7 +146,7 @@ def send_email(email_address,youtube_links):
     # create message
     message = MIMEMultipart()
     message['Subject'] = 'Video explanations for incorrect answers'
-    message['From'] = 'your_email@example.com'
+    message['From'] = "finalprojectdummy@zohomail.in"
     message['To'] = email_address
 
     # create text part
@@ -159,13 +159,15 @@ def send_email(email_address,youtube_links):
     message.attach(part1)
 
     # create SMTP session
-    server = smtplib.SMTP('smtp.protonmail.com', 587)
-    server.starttls()
-    server.login('projectdummy@proton.me ','projectdummy12')
-
-    # send email
-    server.sendmail('projectdummy@proton.me', email_address, message.as_string())
-    server.quit()  
+    try:
+        server = smtplib.SMTP_SSL('smtp.zoho.in', 465)
+        server.ehlo()
+        server.login("finalprojectdummy@zohomail.in", "tictactoeproject")
+        server.sendmail("finalprojectdummy@zohomail.in", email_address, message.as_string())
+        server.close()
+        print('Email sent successfully')
+    except Exception as e:
+        print('Something went wrong while sending email:', e) 
 def input_box(prompt=""):
     input_str = ""
     while True:
@@ -184,8 +186,10 @@ def input_box(prompt=""):
 
             else:
                 input_str += event.unicode
+     small_font=pygame.font.SysFont('arial',12)
      pygame.draw.rect(screen, BLACK, input_box_rect, 2)
      input_text = small_font.render(email_address, True, BLACK)
+     input_box_rect.w = 250
      input_rect = input_text.get_rect(center=input_box_rect.center)
      screen.blit(input_text, input_rect)     #clear the screen
      
@@ -196,7 +200,7 @@ def input_box(prompt=""):
 
     # render input text
      txt_surface = font.render(input_str, True, (0, 0, 0))
-     screen.blit(txt_surface, (input_rect.x + 5, input_rect.y + 2))
+     screen.blit(txt_surface, (input_rect.x -4 , input_rect.y + 5))
 
     # render 'Press enter to submit' text
      prompt_txt = small_font.render('Press enter to submit', True, (0, 0, 0))
@@ -542,7 +546,27 @@ while True:
                screen.blit(txt, txt_rect)
                #if txt_rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
                #    webbrowser.open(link)
-               y += 50
+               y += 20
+          pygame.display.update()
+          medium_font = pygame.font.SysFont('arial', 36)
+          font=pygame.font.SysFont('arial',25) 
+          small_font=pygame.font.SysFont('arial',15)
+          large_font=pygame.font.SysFont('arial',45)
+
+          prompt_text = small_font.render("Click the button below to send video explanations to your email address:", True, BLACK)
+          prompt_rect = prompt_text.get_rect(center=(216,480))
+          screen.blit(prompt_text, prompt_rect)
+          input_box_rect = pygame.Rect(100, 300, 232, 50)
+            #pygame.draw.rect(screen, BLACK, input_box_rect, 2)
+            #input_text = medium_font.render(email_address, True, BLACK)
+            #input_rect = input_text.get_rect(center=input_box_rect.center)
+            #screen.blit(input_text, input_rect)
+            # Display the send button
+          send_rect = pygame.Rect(150, 500, 200, 50)
+          pygame.draw.rect(screen,BLUE, send_rect)
+          txt = small_font.render("Send links to email", True, BLACK)
+          txt_rect = txt.get_rect(center=send_rect.center)
+          screen.blit(txt, txt_rect)
           pygame.display.update()
           while True:
            
@@ -566,31 +590,31 @@ while True:
                         if txt_rect.collidepoint(pos):
                             webbrowser.open(link)
                             break
-                        y += 50
+                        y += 20
                     if send_rect.collidepoint(event.pos):
                          email_address = input_box(prompt="Enter your email address:")
                          send_email(email_address,youtube_links)
                      #screen.fill((108, 207, 246))      
             
-            medium_font = pygame.font.SysFont('arial', 36)
-            font=pygame.font.SysFont('arial',25) 
-            small_font=pygame.font.SysFont('arial',15)
-            large_font=pygame.font.SysFont('arial',45)
+            #medium_font = pygame.font.SysFont('arial', 36)
+            #font=pygame.font.SysFont('arial',25) 
+            #small_font=pygame.font.SysFont('arial',15)
+            #large_font=pygame.font.SysFont('arial',45)
 
-            prompt_text = small_font.render("Click the button below to send video explanations to your email address:", True, BLACK)
-            prompt_rect = prompt_text.get_rect(center=(216,480))
-            screen.blit(prompt_text, prompt_rect)
-            input_box_rect = pygame.Rect(100, 300, 232, 50)
-            #pygame.draw.rect(screen, BLACK, input_box_rect, 2)
-            #input_text = medium_font.render(email_address, True, BLACK)
-            #input_rect = input_text.get_rect(center=input_box_rect.center)
-            #screen.blit(input_text, input_rect)
-            # Display the send button
-            send_rect = pygame.Rect(150, 500, 200, 50)
-            pygame.draw.rect(screen,BLUE, send_rect)
-            txt = small_font.render("Send links to email", True, BLACK)
-            txt_rect = txt.get_rect(center=send_rect.center)
-            screen.blit(txt, txt_rect)
+            #prompt_text = small_font.render("Click the button below to send video explanations to your email address:", True, BLACK)
+            #prompt_rect = prompt_text.get_rect(center=(216,480))
+            #screen.blit(prompt_text, prompt_rect)
+            #input_box_rect = pygame.Rect(100, 300, 232, 50)
+            ##pygame.draw.rect(screen, BLACK, input_box_rect, 2)
+            ##input_text = medium_font.render(email_address, True, BLACK)
+            ##input_rect = input_text.get_rect(center=input_box_rect.center)
+            ##screen.blit(input_text, input_rect)
+            ## Display the send button
+            #send_rect = pygame.Rect(150, 500, 200, 50)
+            #pygame.draw.rect(screen,BLUE, send_rect)
+            #txt = small_font.render("Send links to email", True, BLACK)
+            #txt_rect = txt.get_rect(center=send_rect.center)
+            #screen.blit(txt, txt_rect)
             pygame.display.update()
          
 
@@ -635,6 +659,29 @@ while True:
             else:
                 x=128, 255, 114
             login_box.fill(x)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             if j==0:
                 txt=small_font.render(username,True,(0,0,0))
                 txt_rect=txt.get_rect(center=(200,15))
@@ -756,7 +803,7 @@ while True:
                     elif event.type == pygame.KEYDOWN and  event.key == pygame.K_SPACE:
                     #elif event.key == pygame.K_SPACE:
                            questions()
-                           # pygame.display.update()
+                           pygame.display.update()
             pygame.display.update() 
    
 
