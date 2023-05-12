@@ -352,8 +352,6 @@ while True:
         
         phase="end_game"
         continue
-        phase="end_game"
-        continue
 
     elif res=="comp":
         for i,j in enumerate(box_rects):
@@ -589,7 +587,7 @@ while True:
                y += 30
           pygame.display.update()
     # Render and display the "Send to Email" prompt and button
-          prompt_text = small_font.render("Click the button below to send video explanations to your email address:", True, BLACK)
+          prompt_text = small_font.render("Click the button to send video explanations to your email address:", True, BLACK)
           prompt_rect = prompt_text.get_rect(center=(216, 480))
           screen.blit(prompt_text, prompt_rect)
           input_box_rect = pygame.Rect(100, 300, 232, 50)
@@ -671,7 +669,7 @@ while True:
          # pygame.display.update()
           # display YouTube links for incorrect answers
           if incorrect > 0:
-             txt = font.render("Click the button below to send video explanations to your email address:", True, BLACK)
+             txt = small_font.render("Click the links below to watch video explanations:", True, BLACK)
              txt_rect = txt.get_rect(center=(216, 300))
              screen.blit(txt, txt_rect)
              y = 320
