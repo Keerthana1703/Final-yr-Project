@@ -199,8 +199,15 @@ def input_box(prompt=""):
      pygame.draw.rect(screen, (255, 255, 255), input_rect)
 
     # render input text
-     txt_surface = font.render(input_str, True, (0, 0, 0))
-     screen.blit(txt_surface, (input_rect.x -4 , input_rect.y + 5))
+
+    #CHANGES STARTING-aditi
+     txt=vsmall_font.render(input_str, True, (0, 0, 0))
+     txt_rect=txt.get_rect(center=(200,320))
+     screen.blit(txt,txt_rect) 
+    #CHANGES ENDING -aditi
+     #txt_surface = font.render(input_str, True, (0, 0, 0))
+     #screen.blit(txt_surface, (input_rect.x -4 , input_rect.y + 5))
+
 
     # render 'Press enter to submit' text
      prompt_txt = small_font.render('Press enter to submit', True, (0, 0, 0))
@@ -209,6 +216,67 @@ def input_box(prompt=""):
     # screen.fill((108, 207, 246))
      pygame.display.update()
      #screen.fill((108, 207, 246)) 
+def display_leaderboard():
+     try:
+        scores = pd.read_csv('scores.csv')
+        scores['Score'] = scores.apply(lambda row: score_cal(row['time'], row['correct']), axis=1)
+        leaderboard = scores.groupby('username')['Score'].sum().reset_index()
+        leaderboard = leaderboard.sort_values(by='Score', ascending=False)
+        leaderboard['rank'] = range(1, len(leaderboard) + 1) 
+        screen.fill((108, 207, 246))
+        txt = font.render('Leaderboard', True, (0, 0, 0))
+        txt_rect = txt.get_rect(center=(216, 50))
+        screen.blit(txt, txt_rect)
+        x, y = 30, 100
+        count = 0
+        for i, row in leaderboard.iterrows():
+            rank =row['rank']
+            name = row['username']
+            score = row['Score']
+            txt =font.render(f'{rank}-{name} - {score}', True, (0, 0, 0))
+            txt_rect = txt.get_rect(center=(216, 80 + (count * 25)))
+            screen.blit(txt, txt_rect)
+            count += 1
+        pygame.display.update()
+
+        # Handle events
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                elif event.type == pygame.KEYDOWN:
+                    
+                    if event.key == pygame.K_RETURN:
+                        display_leaderboard()
+                    elif event.key == pygame.K_SPACE and phase=="question":
+                         
+                         questions()
+                        #phase = 'leaderboard'
+                        #scores = pd.read_csv('scores.csv')
+                        #scores['Score'] = scores.apply(lambda row: score_cal(row['time'], row['correct']), axis=1)
+                        #leaderboard = scores.groupby('username')['Score'].sum().reset_index()
+                        #leaderboard = leaderboard.sort_values(by='Score', ascending=False)
+                        #screen.fill((108, 207, 246))
+                        #txt = large_font.render('Leaderboard', True, (0, 0, 0))
+                        #txt_rect = txt.get_rect(center=(216, 50))
+                        #screen.blit(txt, txt_rect)
+                        #count = 1
+                        #for _, row in leaderboard.iterrows():
+                        #    name = row['username']
+                        #    score = row['Score']
+                        #    rank = row['rank']
+                        #    txt = font.render(f'{rank} - {name} - {score}', True, (0, 0, 0))
+                        #    txt_rect = txt.get_rect(center=(216, 80 + (count * 25)))
+                        #    screen.blit(txt, txt_rect)
+                        #    count += 1                 
+                        #pygame.display.update()
+                 #pygame.display.update() 
+   
+
+     except Exception as e:
+         print(e)
+         pass
 questions()
 pygame.init()
 pygame.font.init()
@@ -502,8 +570,8 @@ while True:
       screen.fill((108, 207, 246)) 
       if res2=='player':
  #FONTS LOADED FROM THE --assets--font--folder
-          font = pygame.font.Font('C:/Users/keert/OneDrive/Desktop/aditi/assets/fonts/OpenSans-SemiBold.ttf', 16)
-          small_font = pygame.font.Font('C:/Users/keert/OneDrive/Desktop/aditi/assets/fonts/OpenSans-Regular.ttf', 12)
+          font = pygame.font.Font('C:\\Users\\keert\\OneDrive\\Desktop\\keer\\assets\\fonts\\OpenSans-SemiBold.ttf', 16)
+          small_font = pygame.font.Font('C:\\Users\\keert\\OneDrive\\Desktop\\keer\\assets\\fonts\\OpenSans-SemiBold.ttf', 12)
 
 
 
@@ -519,22 +587,7 @@ while True:
           txt=font.render('Press Enter to see history of players',True,(0,0,0))
           txt_rect=txt.get_rect(center=(216,220))
           screen.blit(txt,txt_rect)
-        ## Display the prompt and input box
-        #  prompt_text = large_font.render("Click the button below to send video explanations to your email address:", True, BLACK)
-        #  prompt_rect = prompt_text.get_rect(center=(216, 200))
-        #  screen.blit(prompt_text, prompt_rect)
-        #  input_box_rect = pygame.Rect(100, 300, 232, 50)
-        #  pygame.draw.rect(screen, BLACK, input_box_rect, 2)
-        #  input_text = medium_font.render(email_address, True, BLACK)
-        #  input_rect = input_text.get_rect(center=input_box_rect.center)
-        #  screen.blit(input_text, input_rect)
-           # Display the send button
-          #send_rect = pygame.Rect(150, 500, 200, 50)
-          #pygame.draw.rect(screen, WHITE, send_rect)
-          #txt = small_font.render("Send links to email", True, BLACK)
-          #txt_rect = txt.get_rect(center=send_rect.center)
-          #screen.blit(txt, txt_rect)
-           # display YouTube links for incorrect answers
+    
           if incorrect > 0:
              txt = font.render("Click the links below to watch video explanations:", True, (0, 0, 0))
              txt_rect = txt.get_rect(center=(216, 300))
@@ -578,8 +631,17 @@ while True:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RETURN:
                         display_leaderboard()
-                    elif event.key == pygame.K_SPACE:
-                            questions()
+                
+                    elif event.key == pygame.K_SPACE and phase=="question":
+                       Score=[0,0,0]
+                       difficulty=1
+                       board=[None]*9
+                       phase="question"
+                       wait=False,False
+                       get_question=True
+                       incorrect=0
+                       empty=[i for i in range(9)]
+                       questions()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     # check if a link was clicked
                     pos = pygame.mouse.get_pos()
@@ -659,32 +721,9 @@ while True:
             else:
                 x=128, 255, 114
             login_box.fill(x)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             if j==0:
                 txt=small_font.render(username,True,(0,0,0))
-                txt_rect=txt.get_rect(center=(200,15))
+                txt_rect=txt.get_rect(center=(144,10))
                 login_box.blit(txt,txt_rect)
             else:
                 txt=small_font.render(len(password)*"*",True,(0,0,0))
@@ -749,64 +788,71 @@ while True:
     #  medium_questions = questions['medium_questions']
     #  hard_questions = questions['hard_questions']
 
-    def display_leaderboard():
-      try:
-        scores = pd.read_csv('scores.csv')
-        scores['Score'] = scores.apply(lambda row: score_cal(row['time'], row['correct']), axis=1)
-        leaderboard = scores.groupby('username')['Score'].sum().reset_index()
-        leaderboard = leaderboard.sort_values(by='Score', ascending=False)
-        leaderboard['rank'] = range(1, len(leaderboard) + 1) 
-        screen.fill((108, 207, 246))
-        txt = font.render('Leaderboard', True, (0, 0, 0))
-        txt_rect = txt.get_rect(center=(216, 50))
-        screen.blit(txt, txt_rect)
-        x, y = 30, 100
-        count = 0
-        for i, row in leaderboard.iterrows():
-            rank =row['rank']
-            name = row['username']
-            score = row['Score']
-            txt =font.render(f'{rank}-{name} - {score}', True, (0, 0, 0))
-            txt_rect = txt.get_rect(center=(216, 80 + (count * 25)))
-            screen.blit(txt, txt_rect)
-            count += 1
-        pygame.display.update()
+    #def display_leaderboard():
+    #  try:
+    #    scores = pd.read_csv('scores.csv')
+    #    scores['Score'] = scores.apply(lambda row: score_cal(row['time'], row['correct']), axis=1)
+    #    leaderboard = scores.groupby('username')['Score'].sum().reset_index()
+    #    leaderboard = leaderboard.sort_values(by='Score', ascending=False)
+    #    leaderboard['rank'] = range(1, len(leaderboard) + 1) 
+    #    screen.fill((108, 207, 246))
+    #    txt = font.render('Leaderboard', True, (0, 0, 0))
+    #    txt_rect = txt.get_rect(center=(216, 50))
+    #    screen.blit(txt, txt_rect)
+    #    x, y = 30, 100
+    #    count = 0
+    #    for i, row in leaderboard.iterrows():
+    #        rank =row['rank']
+    #        name = row['username']
+    #        score = row['Score']
+    #        txt =font.render(f'{rank}-{name} - {score}', True, (0, 0, 0))
+    #        txt_rect = txt.get_rect(center=(216, 80 + (count * 25)))
+    #        screen.blit(txt, txt_rect)
+    #        count += 1
+    #    pygame.display.update()
 
-        # Handle events
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                elif event.type == pygame.KEYDOWN:
+    #    # Handle events
+    #    while True:
+    #        for event in pygame.event.get():
+    #            if event.type == pygame.QUIT:
+    #                pygame.quit()
+    #                sys.exit()
+    #            elif event.type == pygame.KEYDOWN:
                     
-                    if event.key == pygame.K_RETURN:
-                        display_leaderboard()
-                        #phase = 'leaderboard'
-                        #scores = pd.read_csv('scores.csv')
-                        #scores['Score'] = scores.apply(lambda row: score_cal(row['time'], row['correct']), axis=1)
-                        #leaderboard = scores.groupby('username')['Score'].sum().reset_index()
-                        #leaderboard = leaderboard.sort_values(by='Score', ascending=False)
-                        #screen.fill((108, 207, 246))
-                        #txt = large_font.render('Leaderboard', True, (0, 0, 0))
-                        #txt_rect = txt.get_rect(center=(216, 50))
-                        #screen.blit(txt, txt_rect)
-                        #count = 1
-                        #for _, row in leaderboard.iterrows():
-                        #    name = row['username']
-                        #    score = row['Score']
-                        #    rank = row['rank']
-                        #    txt = font.render(f'{rank} - {name} - {score}', True, (0, 0, 0))
-                        #    txt_rect = txt.get_rect(center=(216, 80 + (count * 25)))
-                        #    screen.blit(txt, txt_rect)
-                        #    count += 1
-                    elif event.type == pygame.KEYDOWN and  event.key == pygame.K_SPACE:
-                    #elif event.key == pygame.K_SPACE:
-                           questions()
-                           pygame.display.update()
-            pygame.display.update() 
+    #                if event.key == pygame.K_RETURN:
+    #                    display_leaderboard()
+    #                elif event.key == pygame.K_SPACE and phase=="question":
+    #                     Score=[0,0,0]
+    #                     difficulty=1
+    #                     board=[None]*9
+    #                     phase="question"
+    #                     wait=False,False
+    #                     get_question=True
+    #                     incorrect=0
+    #                     empty=[i for i in range(9)]
+    #                     questions()
+    #                    #phase = 'leaderboard'
+    #                    #scores = pd.read_csv('scores.csv')
+    #                    #scores['Score'] = scores.apply(lambda row: score_cal(row['time'], row['correct']), axis=1)
+    #                    #leaderboard = scores.groupby('username')['Score'].sum().reset_index()
+    #                    #leaderboard = leaderboard.sort_values(by='Score', ascending=False)
+    #                    #screen.fill((108, 207, 246))
+    #                    #txt = large_font.render('Leaderboard', True, (0, 0, 0))
+    #                    #txt_rect = txt.get_rect(center=(216, 50))
+    #                    #screen.blit(txt, txt_rect)
+    #                    #count = 1
+    #                    #for _, row in leaderboard.iterrows():
+    #                    #    name = row['username']
+    #                    #    score = row['Score']
+    #                    #    rank = row['rank']
+    #                    #    txt = font.render(f'{rank} - {name} - {score}', True, (0, 0, 0))
+    #                    #    txt_rect = txt.get_rect(center=(216, 80 + (count * 25)))
+    #                    #    screen.blit(txt, txt_rect)
+    #                    #    count += 1                 
+    #                       pygame.display.update()
+    #             #pygame.display.update() 
    
 
-      except Exception as e:
-        print(e)
-        pass
+    #  except Exception as e:
+    #     print(e)
+    #     pass
