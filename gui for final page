@@ -367,6 +367,66 @@ screen.blit(txt, txt_rect)
 
 
 
+                       font = pygame.font.SysFont('arial', 16)
+small_font = pygame.font.SysFont('arial', 12)
+medium_font = pygame.font.SysFont('arial', 36)
+large_font = pygame.font.SysFont('arial', 45)
+
+# Render the score text
+txt = small_font.render(f'Number of questions answered correctly: {sum(Score)}', True, (0, 0, 0))
+txt_rect = txt.get_rect(center=(216, 83))
+screen.blit(txt, txt_rect)
+
+txt = small_font.render(f'Number of questions answered incorrectly: {incorrect}', True, (0, 0, 0))
+txt_rect = txt.get_rect(center=(216, 118))
+screen.blit(txt, txt_rect)
+
+# Render the retry and player history texts
+txt = medium_font.render('Press SPACE to try again!!', True, (0, 0, 0))
+txt_rect = txt.get_rect(center=(216, 154))
+screen.blit(txt, txt_rect)
+
+txt = medium_font.render('Press ENTER to see history of players', True, (0, 0, 0))
+txt_rect = txt.get_rect(center=(216, 220))
+screen.blit(txt, txt_rect)
+
+# Render the video explanations text and links
+if incorrect > 0:
+    txt = medium_font.render('Click the links below to watch video explanations:', True, (0, 0, 0))
+    txt_rect = txt.get_rect(center=(216, 300))
+    screen.blit(txt, txt_rect)
+    y = 320
+    for link in youtube_links:
+        txt = small_font.render(link, True, (0, 0, 0))
+        txt_rect = txt.get_rect(center=(216, y))
+        screen.blit(txt, txt_rect)
+        y += 30
+
+# Render the send email prompt text and input box
+prompt_text = medium_font.render('Send video explanations to your email address:', True, (0, 0, 0))
+prompt_rect = prompt_text.get_rect(center=(216, 450))
+screen.blit(prompt_text, prompt_rect)
+
+input_box_rect = pygame.Rect(100, 500, 300, 50)
+pygame.draw.rect(screen, (0, 0, 0), input_box_rect, 2)
+input_text = medium_font.render(email_address, True, (0, 0, 0))
+input_rect = input_text.get_rect(center=input_box_rect.center)
+screen.blit(input_text, input_rect)
+
+# Render the send email button
+send_rect = pygame.Rect(100, 580, 300, 50)
+pygame.draw.rect(screen, (0, 0, 255), send_rect)
+txt = medium_font.render('Send links to email', True, (255, 255, 255))
+txt_rect = txt.get_rect(center=send_rect.center)
+screen.blit(txt, txt_rect)
+
+# Update the display
+pygame.display.update()
+
+
+
+
+
 
 
 
