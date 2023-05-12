@@ -90,10 +90,6 @@ def predict():
             if player_wins(copy):
                 return i+1
 
-#def score_cal(time,correct):
-    ##print(time,correct)
-    #return 100-int(time)+(int(correct)*10)
-
 # Define the function to calculate scores
 def score_cal(time, correct):
     return 100 - int(time) + (int(correct) * 10)
@@ -192,22 +188,16 @@ def input_box(prompt=""):
      input_box_rect.w = 250
      input_rect = input_text.get_rect(center=input_box_rect.center)
      screen.blit(input_text, input_rect)     #clear the screen
-     
-     
+      
     # draw input box
      pygame.draw.rect(screen, (0, 0, 0), input_rect, 2)
      pygame.draw.rect(screen, (255, 255, 255), input_rect)
 
     # render input text
 
-    #CHANGES STARTING-aditi
      txt=vsmall_font.render(input_str, True, (0, 0, 0))
      txt_rect=txt.get_rect(center=(200,320))
      screen.blit(txt,txt_rect) 
-    #CHANGES ENDING -aditi
-     #txt_surface = font.render(input_str, True, (0, 0, 0))
-     #screen.blit(txt_surface, (input_rect.x -4 , input_rect.y + 5))
-
 
     # render 'Press enter to submit' text
      prompt_txt = small_font.render('Press enter to submit', True, (0, 0, 0))
@@ -251,29 +241,7 @@ def display_leaderboard():
                         display_leaderboard()
                     elif event.key == pygame.K_SPACE and phase=="question":
                          
-                         questions()
-                        #phase = 'leaderboard'
-                        #scores = pd.read_csv('scores.csv')
-                        #scores['Score'] = scores.apply(lambda row: score_cal(row['time'], row['correct']), axis=1)
-                        #leaderboard = scores.groupby('username')['Score'].sum().reset_index()
-                        #leaderboard = leaderboard.sort_values(by='Score', ascending=False)
-                        #screen.fill((108, 207, 246))
-                        #txt = large_font.render('Leaderboard', True, (0, 0, 0))
-                        #txt_rect = txt.get_rect(center=(216, 50))
-                        #screen.blit(txt, txt_rect)
-                        #count = 1
-                        #for _, row in leaderboard.iterrows():
-                        #    name = row['username']
-                        #    score = row['Score']
-                        #    rank = row['rank']
-                        #    txt = font.render(f'{rank} - {name} - {score}', True, (0, 0, 0))
-                        #    txt_rect = txt.get_rect(center=(216, 80 + (count * 25)))
-                        #    screen.blit(txt, txt_rect)
-                        #    count += 1                 
-                        #pygame.display.update()
-                 #pygame.display.update() 
-   
-
+                         questions()                     
      except Exception as e:
          print(e)
          pass
@@ -360,12 +328,6 @@ while True:
                         password=password[:-1]
                     entered=True
                     save_credentials(username)
-    # pygame.draw.line(screen,(0,0,0),(200,150),(200,750),5)
-    # pygame.draw.line(screen,(0,0,0),(400,150),(400,750),5)
-    # pygame.draw.line(screen,(0,0,0),(0,150),(600,150),5)
-    # pygame.draw.line(screen,(0,0,0),(0,350),(600,350),5)
-    # pygame.draw.line(screen,(0,0,0),(0,550),(600,550),5)
-    # pygame.draw.line(screen,(0,0,0),(0,150),(600,150),5)
     res=player_wins(board)
     #print(phase,res)
     mouse_buttons=pygame.mouse.get_pressed()
@@ -382,6 +344,14 @@ while True:
         res2=res
         res=''
         board=[None]*9
+        timeee=time.time()-start_time
+        start_time=time.time()
+        csv_bs.add_score(username,int(timeee),sum(Score),"scores.csv")
+       
+
+        
+        phase="end_game"
+        continue
         phase="end_game"
         continue
 
@@ -397,6 +367,9 @@ while True:
         res2=res
         res=''
         board=[None]*9
+        timeee=time.time()-start_time
+        start_time=time.time()
+        csv_bs.add_score(username,int(timeee),sum(Score),"scores.csv")
         phase="end_game"
         continue
     # To check for tie
@@ -560,7 +533,6 @@ while True:
      pygame.display.update()
      time.sleep(2)
 
-   #CHANGES WERE MADE HERE STARTING
     elif phase=="end_game":
      # youtube_links = []
       #global phase, score, incorrect
@@ -569,59 +541,6 @@ while True:
       pygame.time.set_timer(pygame.USEREVENT+2,0)
       screen.fill((108, 207, 246)) 
       if res2=='player':
- #FONTS LOADED FROM THE --assets--font--folder
-          #font = pygame.font.Font('C:\\Users\\keert\\OneDrive\\Desktop\\keer\\assets\\fonts\\OpenSans-SemiBold.ttf', 16)
-          #small_font = pygame.font.Font('C:\\Users\\keert\\OneDrive\\Desktop\\keer\\assets\\fonts\\OpenSans-SemiBold.ttf', 12)
-
-
-
-          #txt=small_font.render(f'number of questions answered correctly: {sum(Score)}',True,(0,0,0))
-          #txt_rect=txt.get_rect(center=(216,83))
-          #screen.blit(txt,txt_rect)
-          #txt=small_font.render(f'number of questions answered incorrectly: {incorrect}',True,(0,0,0))
-          #txt_rect=txt.get_rect(center=(216,118))
-          #screen.blit(txt,txt_rect)
-          #txt=font.render('Press space to try again!!',True,(0,0,0))
-          #txt_rect=txt.get_rect(center=(216,154))
-          #screen.blit(txt,txt_rect)
-          #txt=font.render('Press Enter to see history of players',True,(0,0,0))
-          #txt_rect=txt.get_rect(center=(216,220))
-          #screen.blit(txt,txt_rect)
-    
-          #if incorrect > 0:
-          #   txt = font.render("Click the links below to watch video explanations:", True, (0, 0, 0))
-          #   txt_rect = txt.get_rect(center=(216, 300))
-          #   screen.blit(txt, txt_rect)
-          #   y = 320
-          #   for link in youtube_links:
-          #     txt = small_font.render(link, True, (0, 0, 0))
-          #     txt_rect = txt.get_rect(center=(216, y))
-          #     screen.blit(txt, txt_rect)
-          #     #if txt_rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
-          #     #    webbrowser.open(link)
-          #     y += 30
-          #pygame.display.update()
-          #medium_font = pygame.font.SysFont('arial', 36)
-          #font=pygame.font.SysFont('arial',25) 
-          #small_font=pygame.font.SysFont('arial',15)
-          #large_font=pygame.font.SysFont('arial',45)
-
-          #prompt_text = small_font.render("Click the button below to send video explanations to your email address:", True, BLACK)
-          #prompt_rect = prompt_text.get_rect(center=(216,480))
-          #screen.blit(prompt_text, prompt_rect)
-          #input_box_rect = pygame.Rect(100, 300, 232, 50)
-          #  #pygame.draw.rect(screen, BLACK, input_box_rect, 2)
-          #  #input_text = medium_font.render(email_address, True, BLACK)
-          #  #input_rect = input_text.get_rect(center=input_box_rect.center)
-          #  #screen.blit(input_text, input_rect)
-          #  # Display the send button
-          #send_rect = pygame.Rect(100, 500, 200, 50)
-          #pygame.draw.rect(screen,BLUE, send_rect)
-          #txt = small_font.render("Send links to email", True, BLACK)
-          #txt_rect = txt.get_rect(center=send_rect.center)
-          #screen.blit(txt, txt_rect)
-          #pygame.display.update()
-          # Set background color and fonts
           BACKGROUND_COLOR = (108, 207, 246)
           FONT_NAME = 'C:\\Users\\keert\\OneDrive\\Desktop\\keer\\assets\\fonts\\OpenSans-SemiBold.ttf'
 
@@ -710,25 +629,7 @@ while True:
                          send_email(email_address,youtube_links)
                      #screen.fill((108, 207, 246))      
             
-            #medium_font = pygame.font.SysFont('arial', 36)
-            #font=pygame.font.SysFont('arial',25) 
-            #small_font=pygame.font.SysFont('arial',15)
-            #large_font=pygame.font.SysFont('arial',45)
-
-            #prompt_text = small_font.render("Click the button below to send video explanations to your email address:", True, BLACK)
-            #prompt_rect = prompt_text.get_rect(center=(216,480))
-            #screen.blit(prompt_text, prompt_rect)
-            #input_box_rect = pygame.Rect(100, 300, 232, 50)
-            ##pygame.draw.rect(screen, BLACK, input_box_rect, 2)
-            ##input_text = medium_font.render(email_address, True, BLACK)
-            ##input_rect = input_text.get_rect(center=input_box_rect.center)
-            ##screen.blit(input_text, input_rect)
-            ## Display the send button
-            #send_rect = pygame.Rect(150, 500, 200, 50)
-            #pygame.draw.rect(screen,BLUE, send_rect)
-            #txt = small_font.render("Send links to email", True, BLACK)
-            #txt_rect = txt.get_rect(center=send_rect.center)
-            #screen.blit(txt, txt_rect)
+            
             pygame.display.update()
       #pygame.display.update()
 
@@ -826,84 +727,4 @@ while True:
     clock.tick(60)
 
     
-    #def questions():
-
-    #  global easy_questions,medium_questions,hard_questions
-    ##easy_link = "https://www.youtube.com/watch?v=easy_video"
-    ##medium_link = "https://www.youtube.com/watch?v=medium_video"
-    ##hard_link = "https://www.youtube.com/watch?v=hard_video"
-    #  with open('questions.json') as f:
-    #    questions = json.load(f)
-
-    #  easy_questions = questions['easy_questions']
-    #  medium_questions = questions['medium_questions']
-    #  hard_questions = questions['hard_questions']
-
-    #def display_leaderboard():
-    #  try:
-    #    scores = pd.read_csv('scores.csv')
-    #    scores['Score'] = scores.apply(lambda row: score_cal(row['time'], row['correct']), axis=1)
-    #    leaderboard = scores.groupby('username')['Score'].sum().reset_index()
-    #    leaderboard = leaderboard.sort_values(by='Score', ascending=False)
-    #    leaderboard['rank'] = range(1, len(leaderboard) + 1) 
-    #    screen.fill((108, 207, 246))
-    #    txt = font.render('Leaderboard', True, (0, 0, 0))
-    #    txt_rect = txt.get_rect(center=(216, 50))
-    #    screen.blit(txt, txt_rect)
-    #    x, y = 30, 100
-    #    count = 0
-    #    for i, row in leaderboard.iterrows():
-    #        rank =row['rank']
-    #        name = row['username']
-    #        score = row['Score']
-    #        txt =font.render(f'{rank}-{name} - {score}', True, (0, 0, 0))
-    #        txt_rect = txt.get_rect(center=(216, 80 + (count * 25)))
-    #        screen.blit(txt, txt_rect)
-    #        count += 1
-    #    pygame.display.update()
-
-    #    # Handle events
-    #    while True:
-    #        for event in pygame.event.get():
-    #            if event.type == pygame.QUIT:
-    #                pygame.quit()
-    #                sys.exit()
-    #            elif event.type == pygame.KEYDOWN:
-                    
-    #                if event.key == pygame.K_RETURN:
-    #                    display_leaderboard()
-    #                elif event.key == pygame.K_SPACE and phase=="question":
-    #                     Score=[0,0,0]
-    #                     difficulty=1
-    #                     board=[None]*9
-    #                     phase="question"
-    #                     wait=False,False
-    #                     get_question=True
-    #                     incorrect=0
-    #                     empty=[i for i in range(9)]
-    #                     questions()
-    #                    #phase = 'leaderboard'
-    #                    #scores = pd.read_csv('scores.csv')
-    #                    #scores['Score'] = scores.apply(lambda row: score_cal(row['time'], row['correct']), axis=1)
-    #                    #leaderboard = scores.groupby('username')['Score'].sum().reset_index()
-    #                    #leaderboard = leaderboard.sort_values(by='Score', ascending=False)
-    #                    #screen.fill((108, 207, 246))
-    #                    #txt = large_font.render('Leaderboard', True, (0, 0, 0))
-    #                    #txt_rect = txt.get_rect(center=(216, 50))
-    #                    #screen.blit(txt, txt_rect)
-    #                    #count = 1
-    #                    #for _, row in leaderboard.iterrows():
-    #                    #    name = row['username']
-    #                    #    score = row['Score']
-    #                    #    rank = row['rank']
-    #                    #    txt = font.render(f'{rank} - {name} - {score}', True, (0, 0, 0))
-    #                    #    txt_rect = txt.get_rect(center=(216, 80 + (count * 25)))
-    #                    #    screen.blit(txt, txt_rect)
-    #                    #    count += 1                 
-    #                       pygame.display.update()
-    #             #pygame.display.update() 
-   
-
-    #  except Exception as e:
-    #     print(e)
-    #     pass
+  
