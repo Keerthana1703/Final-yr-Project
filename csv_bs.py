@@ -45,27 +45,5 @@ def best_score(file_path,func):
                 u=i[0]
     return highest,u   
 
-#def save_credentials(username, password):
-#    # Create a DataFrame to store the credentials
-#    df = pd.DataFrame({'Username': [username], 'Password': [password], 'Score': [0]})
-    
-#    # Load the existing leaderboard file, or create a new one if it doesn't exist
-#    try:
-#        leaderboard = pd.read_csv('leaderboard.csv', index_col=0)
-#    except FileNotFoundError:
-#        leaderboard = pd.DataFrame(columns=['Username', 'Password', 'Score'])
-    
-#    # Check if the username already exists in the leaderboard
-#    mask = leaderboard['Username'] == username
-#    if mask.any():
-#        # Check if the entered password matches the password associated with the existing username
-#        if password == leaderboard.loc[mask, 'Password'].values[0]:
-#            print('Welcome back, {}!'.format(username))
-#        else:
-#            print('Incorrect password!')
-#    else:
-#        # Append the new player to the leaderboard
-#        leaderboard = leaderboard.append(df, ignore_index=True)
-#        leaderboard.to_csv('leaderboard.csv')
-#        print('Player added successfully!')
+
 

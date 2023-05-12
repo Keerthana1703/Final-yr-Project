@@ -1,9 +1,7 @@
 {
   "ExpandedNodes": [
     "",
-    "\\assets",
-    "\\assets\\fonts",
-    "\\assets\\icons"
+    "\\assets"
   ],
   "SelectedNode": "\\main_logic.py",
   "PreviewInSolutionExplorer": false
