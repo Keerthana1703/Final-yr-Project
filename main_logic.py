@@ -632,33 +632,96 @@ while True:
             
             pygame.display.update()
       #pygame.display.update()
-
+            screen.fill((108, 207, 246))
       elif res2=="comp":
+          
+          BACKGROUND_COLOR = (108, 207, 246)
+          FONT_NAME = 'C:\\Users\\keert\\OneDrive\\Desktop\\keer\\assets\\fonts\\OpenSans-SemiBold.ttf'
+# Initialize pygame and create the screen
+          pygame.init()
+          screen = pygame.display.set_mode((432, 600))
+          pygame.display.set_caption("Quiz Results")
+          clock = pygame.time.Clock()
+# Define text colors and sizes
+          BLACK = (0, 0, 0)
+          SMALL_SIZE = 12
+          MEDIUM_SIZE = 16
+          LARGE_SIZE = 45
+# Load fonts
+          font = pygame.font.Font(FONT_NAME, MEDIUM_SIZE)
+          small_font = pygame.font.Font(FONT_NAME, SMALL_SIZE)
+    # Clear the screen and fill with the background color
+          screen.fill(BACKGROUND_COLOR)
           screen.blit(txt,txt_rect)
-          txt=font.render('Computer wins!!',True,(0,0,0))
-          txt_rect=txt.get_rect(center=(216,241))
+          txt = small_font.render(f'Number of questions answered correctly: {sum(Score)}', True, BLACK)
+          txt_rect = txt.get_rect(center=(216, 83))
+          screen.blit(txt, txt_rect)
+          txt = small_font.render(f'Number of questions answered incorrectly: {incorrect}', True, BLACK)
+          txt_rect = txt.get_rect(center=(216, 118))
+          screen.blit(txt, txt_rect)
+          #txt=font.render('Computer Wins!!',True,BLACK)
+          #txt_rect=txt.get_rect(center=(216,75))
           screen.blit(txt,txt_rect)
-          txt=font.render('Press space to try again!!',True,(0,0,0))
-          txt_rect=txt.get_rect(center=(216,180))
+          txt=font.render('Press SPACE to Try Again',True,BLACK)
+          txt_rect=txt.get_rect(center=(216,154))
           screen.blit(txt,txt_rect)
-          txt=font.render('Press Enter to see history of players',True,(0,0,0))
-          txt_rect=txt.get_rect(center=(216,200))
+          txt=font.render('Press ENTER to See History',True,BLACK)
+          txt_rect=txt.get_rect(center=(216,220))
           screen.blit(txt,txt_rect)
-          pygame.display.update()
+         # pygame.display.update()
           # display YouTube links for incorrect answers
           if incorrect > 0:
-             txt = small_font.render("Click the links below to watch video explanations:", True, (0, 0, 0))
-             txt_rect = txt.get_rect(center=(216, 230))
+             txt = font.render("Click the button below to send video explanations to your email address:", True, BLACK)
+             txt_rect = txt.get_rect(center=(216, 300))
              screen.blit(txt, txt_rect)
              y = 320
              for link in youtube_links:
-                txt = small_font.render(link, True, (0, 0, 0))
+                txt = small_font.render(link, True, (255, 0, 0))
                 txt_rect = txt.get_rect(center=(216, y))
                 screen.blit(txt, txt_rect)
-                y+=20
+                y+=30
              pygame.display.update()
+           # Render and display the "Send to Email" prompt and button
+          prompt_text = small_font.render("Click the button below to send video explanations to your email address:", True, BLACK)
+          prompt_rect = prompt_text.get_rect(center=(216, 480))
+          screen.blit(prompt_text, prompt_rect)
+          input_box_rect = pygame.Rect(100, 300, 232, 50)
+          send_rect = pygame.Rect(116, 530, 200, 50)
+          pygame.draw.rect(screen, BLUE, send_rect)
+          txt = small_font.render("Send Links to Email", True, BLACK)
+          txt_rect = txt.get_rect(center=send_rect.center)
+          screen.blit(txt, txt_rect)
+          pygame.display.update() 
+          while True:
            
-      pygame.display.update() 
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+            # Quit the game if the user closes the window
+                        pygame.quit()
+                        sys.exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        display_leaderboard()
+                
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    # check if a link was clicked
+                    pos = pygame.mouse.get_pos()
+                    y = 320
+                    for link in youtube_links:
+                        txt = small_font.render(link, True, (0, 0, 255))
+                        txt_rect = txt.get_rect(center=(216, y))
+                        if txt_rect.collidepoint(pos):
+                            webbrowser.open(link)
+                            break
+                        y += 20
+                    if send_rect.collidepoint(event.pos):
+                         email_address = input_box(prompt="Enter your email address:")
+                         send_email(email_address,youtube_links)
+                     #screen.fill((108, 207, 246))      
+            
+            
+            pygame.display.update()
+      #pygame.display.update()
 
     elif phase=='login':
         #print(username,password)
