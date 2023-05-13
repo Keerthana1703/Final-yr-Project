@@ -540,7 +540,7 @@ while True:
       screen.fill((108, 207, 246)) 
       if res2=='player':
           BACKGROUND_COLOR = (108, 207, 246)
-          FONT_NAME = 'C:\\Users\\keert\\OneDrive\\Desktop\\keer\\assets\\fonts\\OpenSans-SemiBold.ttf'
+          FONT_NAME = 'assets\\fonts\\OpenSans-SemiBold.ttf'
 
 # Initialize pygame and create the screen
           pygame.init()
@@ -630,11 +630,11 @@ while True:
             
             pygame.display.update()
       #pygame.display.update()
-            screen.fill((108, 207, 246))
+            #screen.fill((108, 207, 246))
       elif res2=="comp":
           
           BACKGROUND_COLOR = (108, 207, 246)
-          FONT_NAME = 'C:\\Users\\keert\\OneDrive\\Desktop\\keer\\assets\\fonts\\OpenSans-SemiBold.ttf'
+          FONT_NAME = 'assets\\fonts\\OpenSans-SemiBold.ttf'
 # Initialize pygame and create the screen
           pygame.init()
           screen = pygame.display.set_mode((432, 600))
