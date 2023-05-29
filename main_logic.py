@@ -142,7 +142,7 @@ def send_email(email_address,youtube_links):
     # create message
     message = MIMEMultipart()
     message['Subject'] = 'Video explanations for incorrect answers'
-    message['From'] = "finalprojectdummy@zohomail.in"
+    message['From'] = "emailid"
     message['To'] = email_address
 
     # create text part
@@ -158,8 +158,8 @@ def send_email(email_address,youtube_links):
     try:
         server = smtplib.SMTP_SSL('smtp.zoho.in', 465)
         server.ehlo()
-        server.login("finalprojectdummy@zohomail.in", "tictactoeproject")
-        server.sendmail("finalprojectdummy@zohomail.in", email_address, message.as_string())
+        server.login("emailid", "pwd")
+        server.sendmail("emailid", email_address, message.as_string())
         server.close()
         print('Email sent successfully')
     except Exception as e:
